@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import FlashCard from './FlashCard';
+import './FlashCard.css';
 
 const FlashCardsPage = () => {
   const [flashCardsData, setFlashCardsData] = useState([]);
