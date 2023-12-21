@@ -14,7 +14,7 @@ const Contact = () => {
     const { name, value } = e.target;
     setContactInfo({ ...contactInfo, [name]: value });
   };
-  
+
   const handleSubmit = async () => {
     try {
       console.log('Axios Config:', axios.defaults);
@@ -35,7 +35,7 @@ const Contact = () => {
         <label>Subject:</label>
         <input type="text" name="subject" className="subject" value={contactInfo.subject} onChange={handleInputChange} />
 
-        <label>Email:</label>
+        <label>Email Address:</label>
         <input type="text" name="email" className="email" value={contactInfo.email} onChange={handleInputChange} />
 
         <label>Content:</label>

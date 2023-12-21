@@ -263,6 +263,18 @@
       "email": "Attendance for class",
       "content": "I will be absent for tomorrow's class.",
       "id": 2
+    },
+    {
+      "subject": "Leave",
+      "email": "Sick leave",
+      "content": "I will take a sick leave.",
+      "id": 3
+    },
+    {
+      "subject": "presentation",
+      "email": "example@gmail.com",
+      "content": "We will do the presentation tomorrow.",
+      "id": 4
     }
   ]
 }
