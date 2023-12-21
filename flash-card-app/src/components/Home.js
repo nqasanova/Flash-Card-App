@@ -1,5 +1,6 @@
 import React from 'react';
 
+// Array of project data containing title, description, and link
 const projects = [
   {
     title: 'Personal Website',
@@ -18,6 +19,7 @@ const projects = [
   },
 ];
 
+// Functional component representing the Home page
 const Home = () => {
   return (
     <div className="home-container">
