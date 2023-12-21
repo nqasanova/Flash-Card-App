@@ -2,8 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
+// Functional component representing the navigation bar
 const Navbar = () => {
   return (
+    // Navigation bar container
     <nav className="navbar">
       <ul className="nav-list">
         <li className="nav-item">
