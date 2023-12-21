@@ -250,5 +250,19 @@
       "question": "What is the chemical symbol for silver?",
       "answer": "Ag"
     }
+  ],
+  "messages": [
+    {
+      "subject": "aa",
+      "email": "aa",
+      "content": "aa",
+      "id": 1
+    },
+    {
+      "subject": "Attendance",
+      "email": "Attendance for class",
+      "content": "I will be absent for tomorrow's class.",
+      "id": 2
+    }
   ]
 }
