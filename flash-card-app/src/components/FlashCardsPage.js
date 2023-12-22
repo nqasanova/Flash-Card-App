@@ -6,26 +6,39 @@ const FlashCardsPage = () => {
   const [flashCardsData, setFlashCardsData] = useState([]);
   const [newCard, setNewCard] = useState({ question: '', answer: '' });
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/flashcards');
-      setFlashCardsData(response.data.flashcards || []);
-    } catch (error) {
-      console.error('Error fetching flashcards data:', error);
-    }
-  };
-
   const addCard = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/flashcards', newCard);
+      const response = await axios.post('http://localhost:3001/flashcards', { ...newCard, lastModified: new Date(), status: 'Learned' });
       setFlashCardsData([...flashCardsData, response.data]);
       setNewCard({ question: '', answer: '' });
     } catch (error) {
       console.error('Error adding flashcard:', error);
+    }
+  };
+
+    useEffect(() => {
+    fetchData();
+  }, []); // Empty dependency array to fetch data only once when the component mounts
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/flashcards');
+      console.log(response.data); // Log the response data to check its structure
+      setFlashCardsData(response.data || []); // Set flashCardsData directly from response.data
+    } catch (error) {
+      console.error('Error fetching flashcards data:', error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        console.error('Status code:', error.response.status);
+        console.error('Response data:', error.response.data);
+        console.error('Headers:', error.response.headers);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('No response received. Request details:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error setting up the request:', error.message);
+      }
     }
   };
 
@@ -47,6 +60,18 @@ const FlashCardsPage = () => {
     }
   };
 
+  const filterByStatus = (status) => {
+    setFlashCardsData(
+      flashCardsData.filter((card) => (status === '' ? true : card.status === status))
+    );
+  };
+
+  const sortByDate = () => {
+    setFlashCardsData(
+      [...flashCardsData].sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified))
+    );
+  };
+
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Flash Cards</h1>
@@ -59,13 +84,36 @@ const FlashCardsPage = () => {
         <h2>Add New Flash Card:</h2>
         <div>
           <label>Question:</label>
-          <input type="text" value={newCard.question} onChange={(e) => setNewCard({ ...newCard, question: e.target.value })} />
+          <input
+            type="text"
+            value={newCard.question}
+            onChange={(e) => setNewCard({ ...newCard, question: e.target.value })}
+          />
         </div>
         <div>
           <label>Answer:</label>
-          <input type="text" value={newCard.answer} onChange={(e) => setNewCard({ ...newCard, answer: e.target.value })} />
+          <input
+            type="text"
+            value={newCard.answer}
+            onChange={(e) => setNewCard({ ...newCard, answer: e.target.value })}
+          />
         </div>
         <button onClick={addCard}>Add Card</button>
+      </div>
+      <div>
+        <div>
+          <label>Status:</label>
+          <select onChange={(e) => filterByStatus(e.target.value)}>
+            <option value="">All</option>
+            <option value="Learned">Learned</option>
+            <option value="Want to Learn">Want to Learn</option>
+            <option value="Noted">Noted</option>
+          </select>
+        </div>
+        <div>
+          <label>Sort by Date:</label>
+          <button onClick={sortByDate}>Sort</button>
+        </div>
       </div>
     </div>
   );

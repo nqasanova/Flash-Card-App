@@ -11,8 +11,8 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
   };
 
   const handleEdit = () => {
-    onEdit(id, editedContent);
-    setIsFlipped(false); 
+    onEdit(id, { ...editedContent, lastModified: new Date(), status });
+    setIsFlipped(false);
   };
 
   return (
