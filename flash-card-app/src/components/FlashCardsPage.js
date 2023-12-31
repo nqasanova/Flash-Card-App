@@ -8,7 +8,7 @@ const FlashCardsPage = () => {
 
   const addCard = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/flashcards', {
+      const response = await axios.post('http://localhost:3000/flashcards', {
         ...newCard,
         lastModified: new Date(),
         status: 'Learned',
