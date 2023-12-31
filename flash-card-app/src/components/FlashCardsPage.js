@@ -4,17 +4,16 @@ import FlashCard from './FlashCard';
 
 const FlashCardsPage = () => {
   const [flashCardsData, setFlashCardsData] = useState([]);
-  const [newCard, setNewCard] = useState({ question: '', answer: '' });
+  const [newCard, setNewCard] = useState({ question: '', answer: '', status: 'Learned' }); // Add status field
 
   const addCard = async () => {
     try {
       const response = await axios.post('http://localhost:3000/flashcards', {
         ...newCard,
         lastModified: new Date(),
-        status: 'Learned',
       });
       setFlashCardsData([...flashCardsData, response.data]);
-      setNewCard({ question: '', answer: '' });
+      setNewCard({ question: '', answer: '', status: 'Learned' }); // Reset status to default
     } catch (error) {
       console.error('Error adding flashcard:', error);
     }
@@ -82,19 +81,30 @@ const FlashCardsPage = () => {
         <h2>Add New Flash Card:</h2>
         <div>
           <label>Question:</label>
-          <input
+          <input 
             type="text"
             value={newCard.question}
             onChange={(e) => setNewCard({ ...newCard, question: e.target.value })}
           />
         </div>
         <div>
-          <label>Answer:</label>
+          <label class="answer-lab">Answer:</label>
           <input
             type="text"
             value={newCard.answer}
             onChange={(e) => setNewCard({ ...newCard, answer: e.target.value })}
           />
+        </div>
+        <div>
+          <label class="status-lab">Status:</label>
+          <select
+            value={newCard.status}
+            onChange={(e) => setNewCard({ ...newCard, status: e.target.value })}
+          >
+            <option value="Learned">Learned</option>
+            <option value="Want to Learn">Want to Learn</option>
+            <option value="Noted">Noted</option>
+          </select>
         </div>
         <button onClick={addCard}>Add Card</button>
       </div>
