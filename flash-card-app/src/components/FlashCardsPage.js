@@ -8,7 +8,11 @@ const FlashCardsPage = () => {
 
   const addCard = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/flashcards', { ...newCard, lastModified: new Date(), status: 'Learned' });
+      const response = await axios.post('http://localhost:3001/flashcards', {
+        ...newCard,
+        lastModified: new Date(),
+        status: 'Learned',
+      });
       setFlashCardsData([...flashCardsData, response.data]);
       setNewCard({ question: '', answer: '' });
     } catch (error) {
@@ -16,27 +20,24 @@ const FlashCardsPage = () => {
     }
   };
 
-    useEffect(() => {
+  useEffect(() => {
     fetchData();
-  }, []); // Empty dependency array to fetch data only once when the component mounts
+  }, []);
 
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:3000/flashcards');
-      console.log(response.data); // Log the response data to check its structure
-      setFlashCardsData(response.data || []); // Set flashCardsData directly from response.data
+      console.log(response.data);
+      setFlashCardsData(response.data || []);
     } catch (error) {
       console.error('Error fetching flashcards data:', error);
       if (error.response) {
-        // The request was made and the server responded with a status code
         console.error('Status code:', error.response.status);
         console.error('Response data:', error.response.data);
         console.error('Headers:', error.response.headers);
       } else if (error.request) {
-        // The request was made but no response was received
         console.error('No response received. Request details:', error.request);
       } else {
-        // Something happened in setting up the request that triggered an Error
         console.error('Error setting up the request:', error.message);
       }
     }
@@ -75,11 +76,8 @@ const FlashCardsPage = () => {
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Flash Cards</h1>
-      <div className="flash-cards-container">
-        {flashCardsData.map((card) => (
-          <FlashCard key={card.id} card={card} onEdit={editCard} onDelete={deleteCard} />
-        ))}
-      </div>
+
+      {/* Add New Flash Card Section */}
       <div>
         <h2>Add New Flash Card:</h2>
         <div>
@@ -100,6 +98,8 @@ const FlashCardsPage = () => {
         </div>
         <button onClick={addCard}>Add Card</button>
       </div>
+
+      {/* Sorting Section */}
       <div>
         <div>
           <label>Status:</label>
@@ -114,6 +114,13 @@ const FlashCardsPage = () => {
           <label>Sort by Date:</label>
           <button onClick={sortByDate}>Sort</button>
         </div>
+      </div>
+
+      {/* Fetched Cards Section */}
+      <div className="flash-cards-container">
+        {flashCardsData.map((card) => (
+          <FlashCard key={card.id} card={card} onEdit={editCard} onDelete={deleteCard} />
+        ))}
       </div>
     </div>
   );
