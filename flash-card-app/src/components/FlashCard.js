@@ -1,3 +1,4 @@
+// FlashCard.js
 import React, { useState } from 'react';
 import './FlashCard.css';
 
@@ -16,7 +17,7 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
   };
 
   return (
-    <div className={`flash-card ${isFlipped ? 'flipped' : ''}`}>
+    <div className={`flash-card ${isFlipped ? 'flipped' : ''}`} onClick={handleFlip}>
       <div className="card">
         <div className="card-side front">
           <p>{question}</p>
@@ -28,7 +29,7 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
         </div>
       </div>
       <div className="card-actions">
-      <button className="edit-button" onClick={handleEdit}>
+        <button className="edit-button" onClick={handleEdit}>
           Edit
         </button>
         <button className="delete-button" onClick={() => onDelete(id)}>
