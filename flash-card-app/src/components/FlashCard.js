@@ -28,8 +28,12 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
         </div>
       </div>
       <div className="card-actions">
-        <button onClick={handleEdit}>Edit</button>
-        <button onClick={() => onDelete(id)}>Delete</button>
+      <button className="edit-button" onClick={handleEdit}>
+          Edit
+        </button>
+        <button className="delete-button" onClick={() => onDelete(id)}>
+          Delete
+        </button>
       </div>
     </div>
   );
