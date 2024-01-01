@@ -6,6 +6,7 @@ const FlashCardsPage = () => {
   const [flashCardsData, setFlashCardsData] = useState([]);
   const [newCard, setNewCard] = useState({ question: '', answer: '', status: 'Learned' });
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
 
   const [originalFlashCardsData, setOriginalFlashCardsData] = useState([]);
 
@@ -25,7 +26,7 @@ const FlashCardsPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedStatus]);
 
   const fetchData = async () => {
     try {
@@ -83,6 +84,12 @@ const FlashCardsPage = () => {
     }
   };
 
+  // Inside the JSX where you render the status filter dropdown
+  const handleStatusChange = (e) => {
+    setSelectedStatus(e.target.value);
+    filterByStatus(e.target.value);
+  };
+
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Flash Cards</h1>
@@ -120,20 +127,16 @@ const FlashCardsPage = () => {
         <button onClick={addCard}>Add Card</button>
       </div>
 
-      {/* Sorting Section */}
+      {/* Filtering Section */}
       <div>
         <div>
-          <label>Status:</label>
+          <label class="filter-status">Filter by Status:</label>
           <select onChange={(e) => filterByStatus(e.target.value)}>
             <option value="">All</option>
             <option value="Learned">Learned</option>
             <option value="Want to Learn">Want to Learn</option>
             <option value="Noted">Noted</option>
           </select>
-        </div>
-        <div>
-          <label>Sort by Date:</label>
-          <button onClick={sortByDate}>Sort</button>
         </div>
         <div>
           <label>Search:</label>

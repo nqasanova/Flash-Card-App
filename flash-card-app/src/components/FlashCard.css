@@ -173,6 +173,7 @@ button {
   display: inline-block;
   font-size: 16px;
   margin-top: 10px;
+  margin-bottom: 50px;
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s;
@@ -188,4 +189,20 @@ button:hover {
 
 .search-button:hover {
   background-color: #003200;
+}
+
+select {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  outline: none;
+  margin-left: 20px;
+}
+
+div > select {
+  margin-left: 10px;
+}
+
+.filter-status {
+  margin-left: 600px;
 }
