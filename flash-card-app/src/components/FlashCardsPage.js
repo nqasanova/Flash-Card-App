@@ -17,32 +17,33 @@ const FlashCardsPage = () => {
         lastModified: new Date(),
       });
       setFlashCardsData([...flashCardsData, response.data]);
-      setOriginalFlashCardsData([...originalFlashCardsData, response.data]); 
+      setOriginalFlashCardsData([...originalFlashCardsData, response.data]);
       setNewCard({ question: '', answer: '', status: 'Learned' });
     } catch (error) {
       console.error('Error adding flashcard:', error);
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, [selectedStatus]);
-
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:3000/flashcards');
-      setFlashCardsData(response.data || []);
-      setOriginalFlashCardsData(response.data || []); 
+      setOriginalFlashCardsData(response.data || []);
+      sortByDate(response.data); // Initial sorting
     } catch (error) {
       console.error('Error fetching flashcards data:', error);
     }
   };
 
+  const sortByDate = (cards) => {
+    const sortedCards = [...cards].sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
+    setFlashCardsData(sortedCards);
+  };
+
   const editCard = async (id, updatedCard) => {
     try {
       const response = await axios.put(`http://localhost:3000/flashcards/${id}`, updatedCard);
-      setFlashCardsData(flashCardsData.map((card) => (card.id === id ? response.data : card)));
-      setOriginalFlashCardsData(originalFlashCardsData.map((card) => (card.id === id ? response.data : card))); 
+      const updatedCards = flashCardsData.map((card) => (card.id === id ? response.data : card));
+      sortByDate(updatedCards); // Sorting after editing
     } catch (error) {
       console.error('Error editing flashcard:', error);
     }
@@ -51,43 +52,38 @@ const FlashCardsPage = () => {
   const deleteCard = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/flashcards/${id}`);
-      setFlashCardsData(flashCardsData.filter((card) => card.id !== id));
-      setOriginalFlashCardsData(originalFlashCardsData.filter((card) => card.id !== id)); 
+      const filteredCards = flashCardsData.filter((card) => card.id !== id);
+      sortByDate(filteredCards); // Sorting after deleting
     } catch (error) {
       console.error('Error deleting flashcard:', error);
     }
   };
 
   const filterByStatus = (status) => {
-    setFlashCardsData(
-      originalFlashCardsData.filter((card) => (status === '' ? true : card.status === status))
-    );
+    const filteredCards = originalFlashCardsData.filter((card) => (status === '' ? true : card.status === status));
+    sortByDate(filteredCards); // Sorting after filtering
   };
 
-  const sortByDate = () => {
-    setFlashCardsData(
-      [...flashCardsData].sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified))
-    );
+  useEffect(() => {
+    fetchData();
+  }, [selectedStatus]);
+
+  const handleStatusChange = (e) => {
+    setSelectedStatus(e.target.value);
+    filterByStatus(e.target.value);
   };
 
   const searchCards = () => {
     const query = searchQuery.toLowerCase();
     if (query === '') {
-      setFlashCardsData(originalFlashCardsData);
+      sortByDate(originalFlashCardsData); // Sorting after clearing search
     } else {
-      setFlashCardsData(
-        originalFlashCardsData.filter(
-          (card) =>
-            card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query)
-        )
+      const filteredCards = originalFlashCardsData.filter(
+        (card) =>
+          card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query)
       );
+      sortByDate(filteredCards); // Sorting after searching
     }
-  };
-
-  // Inside the JSX where you render the status filter dropdown
-  const handleStatusChange = (e) => {
-    setSelectedStatus(e.target.value);
-    filterByStatus(e.target.value);
   };
 
   return (
@@ -106,7 +102,7 @@ const FlashCardsPage = () => {
           />
         </div>
         <div>
-          <label class="answer-lab">Answer:</label>
+          <label className="answer-lab">Answer:</label>
           <input
             type="text"
             value={newCard.answer}
@@ -114,7 +110,7 @@ const FlashCardsPage = () => {
           />
         </div>
         <div>
-          <label class="status-lab">Status:</label>
+          <label className="status-lab">Status:</label>
           <select
             value={newCard.status}
             onChange={(e) => setNewCard({ ...newCard, status: e.target.value })}
@@ -130,8 +126,8 @@ const FlashCardsPage = () => {
       {/* Filtering Section */}
       <div>
         <div>
-          <label class="filter-status">Filter by Status:</label>
-          <select onChange={(e) => filterByStatus(e.target.value)}>
+          <label className="filter-status">Filter by Status:</label>
+          <select onChange={handleStatusChange}>
             <option value="">All</option>
             <option value="Learned">Learned</option>
             <option value="Want to Learn">Want to Learn</option>
@@ -145,7 +141,9 @@ const FlashCardsPage = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button className="search-button" onClick={searchCards}>Search</button>
+          <button className="search-button" onClick={searchCards}>
+            Search
+          </button>
         </div>
       </div>
 

@@ -25,7 +25,9 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
         </div>
         <div className="card-side back">
           <p>{answer}</p>
+          <hr></hr>
           <p>Last Modified: {lastModified}</p>
+          <hr></hr>
           <p>Status: {status}</p>
         </div>
       </div>
