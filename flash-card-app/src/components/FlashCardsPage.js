@@ -7,6 +7,7 @@ const FlashCardsPage = () => {
   const [newCard, setNewCard] = useState({ question: '', answer: '', status: 'Learned' });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
+  const [sortOption, setSortOption] = useState('date'); 
 
   const [originalFlashCardsData, setOriginalFlashCardsData] = useState([]);
 
@@ -34,9 +35,20 @@ const FlashCardsPage = () => {
     }
   };
 
+  const sortByAttribute = (cards, attribute) => {
+    switch (attribute) {
+      case 'status':
+        return [...cards].sort((a, b) => a.status.localeCompare(b.status));
+      case 'question':
+        return [...cards].sort((a, b) => a.question.localeCompare(b.question));
+      // Add more cases based on your requirements
+      default:
+        return [...cards].sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
+    }
+  };
+
   const sortByDate = (cards) => {
-    const sortedCards = [...cards].sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
-    setFlashCardsData(sortedCards);
+    setFlashCardsData(sortByAttribute(cards, sortOption));
   };
 
   const editCard = async (id, updatedCard) => {
@@ -49,7 +61,6 @@ const FlashCardsPage = () => {
     }
   };
 
-  {/* Delete Flash Card Section */}
   const deleteCard = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/flashcards/${id}`);
@@ -67,7 +78,7 @@ const FlashCardsPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [selectedStatus]);
+  }, [selectedStatus, sortOption]);
 
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);
@@ -146,6 +157,17 @@ const FlashCardsPage = () => {
             Search
           </button>
         </div>
+      </div>
+
+      {/* Sorting Section */}
+      <div>
+        <label className="sort-label">Sort by:</label>
+        <select onChange={(e) => setSortOption(e.target.value)}>
+          <option value="date">Date</option>
+          <option value="status">Status</option>
+          <option value="question">Question</option>
+          {/* Add more options based on your requirements */}
+        </select>
       </div>
 
       {/* Fetched Cards Section */}
