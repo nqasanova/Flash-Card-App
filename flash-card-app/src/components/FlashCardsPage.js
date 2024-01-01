@@ -49,6 +49,7 @@ const FlashCardsPage = () => {
     }
   };
 
+  {/* Delete Flash Card Section */}
   const deleteCard = async (id) => {
     try {
       await axios.delete(`http://localhost:3000/flashcards/${id}`);
