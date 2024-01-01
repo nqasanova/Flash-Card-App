@@ -92,12 +92,12 @@ select[control-id="ControlID-3"] {
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 4px;
-  transition: background-color 0.3s, opacity 0.3s; /* Add opacity transition */
-  opacity: 0; /* Initially hidden */
+  transition: background-color 0.3s, opacity 0.3s;
+  opacity: 0; 
 }
 
 .flash-card:hover .card-actions button {
-  opacity: 1; /* Make buttons visible on hover */
+  opacity: 1; 
 }
 
 .card-actions button:hover {
@@ -180,4 +180,12 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.search-button {
+  margin-left: 15px;
+}
+
+.search-button:hover {
+  background-color: #003200;
 }

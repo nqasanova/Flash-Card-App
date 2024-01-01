@@ -6,8 +6,10 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
   const [isFlipped, setIsFlipped] = useState(false);
   const [editedContent, setEditedContent] = useState({ question, answer });
 
-  const handleFlip = () => {
-    setIsFlipped(!isFlipped);
+  const handleFlip = (e) => {
+    if (!e.target.classList.contains('card-side')) {
+      setIsFlipped(!isFlipped);
+    }
   };
 
   const handleEdit = () => {
@@ -16,8 +18,8 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
   };
 
   return (
-    <div className={`flash-card ${isFlipped ? 'flipped' : ''}`} onClick={handleFlip}>
-      <div className="card">
+    <div className={`flash-card ${isFlipped ? 'flipped' : ''}`}>
+      <div className="card" onClick={handleFlip}>
         <div className="card-side front">
           <p>{question}</p>
         </div>
@@ -28,10 +30,10 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
         </div>
       </div>
       <div className="card-actions">
-        <button className="edit-button" onClick={handleEdit}>
+        <button className="edit-button" onClick={(e) => { handleEdit(); e.stopPropagation(); }}>
           Edit
         </button>
-        <button className="delete-button" onClick={() => onDelete(id)}>
+        <button className="delete-button" onClick={(e) => { onDelete(id); e.stopPropagation(); }}>
           Delete
         </button>
       </div>

@@ -1,20 +1,6 @@
 {
   "flashcards": [
     {
-      "id": 1,
-      "question": "What is the capital of Brazil?",
-      "answer": "Brasília",
-      "status": "Learned",
-      "lastModified": "2023-12-15T09:24:00.000Z"
-    },
-    {
-      "id": 2,
-      "question": "Which element has the chemical symbol 'O'?",
-      "answer": "Oxygen",
-      "status": "Want to Learn",
-      "lastModified": "2023-12-17T14:12:00.000Z"
-    },
-    {
       "id": 3,
       "question": "What is the currency of Japan?",
       "answer": "Japanese Yen",

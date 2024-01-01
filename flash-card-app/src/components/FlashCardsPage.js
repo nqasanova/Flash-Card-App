@@ -4,7 +4,10 @@ import FlashCard from './FlashCard';
 
 const FlashCardsPage = () => {
   const [flashCardsData, setFlashCardsData] = useState([]);
-  const [newCard, setNewCard] = useState({ question: '', answer: '', status: 'Learned' }); // Add status field
+  const [newCard, setNewCard] = useState({ question: '', answer: '', status: 'Learned' });
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const [originalFlashCardsData, setOriginalFlashCardsData] = useState([]);
 
   const addCard = async () => {
     try {
@@ -13,7 +16,8 @@ const FlashCardsPage = () => {
         lastModified: new Date(),
       });
       setFlashCardsData([...flashCardsData, response.data]);
-      setNewCard({ question: '', answer: '', status: 'Learned' }); // Reset status to default
+      setOriginalFlashCardsData([...originalFlashCardsData, response.data]); 
+      setNewCard({ question: '', answer: '', status: 'Learned' });
     } catch (error) {
       console.error('Error adding flashcard:', error);
     }
@@ -26,26 +30,18 @@ const FlashCardsPage = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:3000/flashcards');
-      console.log(response.data);
       setFlashCardsData(response.data || []);
+      setOriginalFlashCardsData(response.data || []); 
     } catch (error) {
       console.error('Error fetching flashcards data:', error);
-      if (error.response) {
-        console.error('Status code:', error.response.status);
-        console.error('Response data:', error.response.data);
-        console.error('Headers:', error.response.headers);
-      } else if (error.request) {
-        console.error('No response received. Request details:', error.request);
-      } else {
-        console.error('Error setting up the request:', error.message);
-      }
     }
   };
 
   const editCard = async (id, updatedCard) => {
     try {
-      const response = await axios.put(`http://localhost:3001/flashcards/${id}`, updatedCard);
+      const response = await axios.put(`http://localhost:3000/flashcards/${id}`, updatedCard);
       setFlashCardsData(flashCardsData.map((card) => (card.id === id ? response.data : card)));
+      setOriginalFlashCardsData(originalFlashCardsData.map((card) => (card.id === id ? response.data : card))); 
     } catch (error) {
       console.error('Error editing flashcard:', error);
     }
@@ -53,8 +49,9 @@ const FlashCardsPage = () => {
 
   const deleteCard = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/flashcards/${id}`);
+      await axios.delete(`http://localhost:3000/flashcards/${id}`);
       setFlashCardsData(flashCardsData.filter((card) => card.id !== id));
+      setOriginalFlashCardsData(originalFlashCardsData.filter((card) => card.id !== id)); 
     } catch (error) {
       console.error('Error deleting flashcard:', error);
     }
@@ -62,7 +59,7 @@ const FlashCardsPage = () => {
 
   const filterByStatus = (status) => {
     setFlashCardsData(
-      flashCardsData.filter((card) => (status === '' ? true : card.status === status))
+      originalFlashCardsData.filter((card) => (status === '' ? true : card.status === status))
     );
   };
 
@@ -70,6 +67,20 @@ const FlashCardsPage = () => {
     setFlashCardsData(
       [...flashCardsData].sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified))
     );
+  };
+
+  const searchCards = () => {
+    const query = searchQuery.toLowerCase();
+    if (query === '') {
+      setFlashCardsData(originalFlashCardsData);
+    } else {
+      setFlashCardsData(
+        originalFlashCardsData.filter(
+          (card) =>
+            card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query)
+        )
+      );
+    }
   };
 
   return (
@@ -81,7 +92,7 @@ const FlashCardsPage = () => {
         <h2>Add New Flash Card:</h2>
         <div>
           <label>Question:</label>
-          <input 
+          <input
             type="text"
             value={newCard.question}
             onChange={(e) => setNewCard({ ...newCard, question: e.target.value })}
@@ -123,6 +134,15 @@ const FlashCardsPage = () => {
         <div>
           <label>Sort by Date:</label>
           <button onClick={sortByDate}>Sort</button>
+        </div>
+        <div>
+          <label>Search:</label>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button className="search-button" onClick={searchCards}>Search</button>
         </div>
       </div>
 
