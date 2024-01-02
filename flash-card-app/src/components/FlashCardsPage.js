@@ -135,6 +135,17 @@ const FlashCardsPage = () => {
         <button onClick={addCard}>Add Card</button>
       </div>
 
+      {/* Sorting Section */}
+      <div>
+        <label className="sort-label">Sort by:</label>
+        <select onChange={(e) => setSortOption(e.target.value)}>
+          <option value="date">Date</option>
+          <option value="status">Status</option>
+          <option value="question">Question</option>
+          {/* Add more options based on your requirements */}
+        </select>
+      </div>
+
       {/* Filtering Section */}
       <div>
         <div>
@@ -157,17 +168,6 @@ const FlashCardsPage = () => {
             Search
           </button>
         </div>
-      </div>
-
-      {/* Sorting Section */}
-      <div>
-        <label className="sort-label">Sort by:</label>
-        <select onChange={(e) => setSortOption(e.target.value)}>
-          <option value="date">Date</option>
-          <option value="status">Status</option>
-          <option value="question">Question</option>
-          {/* Add more options based on your requirements */}
-        </select>
       </div>
 
       {/* Fetched Cards Section */}

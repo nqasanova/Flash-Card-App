@@ -201,8 +201,13 @@ select {
 
 div > select {
   margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 .filter-status {
   margin-left: 600px;
+}
+
+.sort-label {
+  margin-left: 650px;
 }
