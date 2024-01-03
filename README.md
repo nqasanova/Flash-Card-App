@@ -81,7 +81,9 @@ The Flash Card App follows a well-organized project structure for maintainabilit
 
 flash-card-app
 |-- public
+
 |-- src
+
 |   |-- assets
 |   |-- components
 |   |-- App.css
