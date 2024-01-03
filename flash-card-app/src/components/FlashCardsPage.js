@@ -7,7 +7,7 @@ const FlashCardsPage = () => {
   const [newCard, setNewCard] = useState({ question: '', answer: '', status: 'Learned' });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
-  const [sortOption, setSortOption] = useState('date'); 
+  const [sortOption, setSortOption] = useState('date');
 
   const [originalFlashCardsData, setOriginalFlashCardsData] = useState([]);
 
@@ -41,7 +41,6 @@ const FlashCardsPage = () => {
         return [...cards].sort((a, b) => a.status.localeCompare(b.status));
       case 'question':
         return [...cards].sort((a, b) => a.question.localeCompare(b.question));
-      // Add more cases based on your requirements
       default:
         return [...cards].sort((a, b) => new Date(b.lastModified) - new Date(a.lastModified));
     }
@@ -51,11 +50,19 @@ const FlashCardsPage = () => {
     setFlashCardsData(sortByAttribute(cards, sortOption));
   };
 
+
   const editCard = async (id, updatedCard) => {
     try {
-      const response = await axios.put(`http://localhost:3000/flashcards/${id}`, updatedCard);
-      const updatedCards = flashCardsData.map((card) => (card.id === id ? response.data : card));
-      sortByDate(updatedCards); // Sorting after editing
+      // Update the flash card on the server
+      await axios.put(`http://localhost:3000/flashcards/${id}`, updatedCard);
+
+      // Fetch the updated flash cards from the server
+      const updatedData = await axios.get('http://localhost:3000/flashcards');
+      const updatedCards = updatedData.data || [];
+
+      // Set the updated flash cards and sort them
+      setOriginalFlashCardsData(updatedCards);
+      sortByDate(updatedCards);
     } catch (error) {
       console.error('Error editing flashcard:', error);
     }

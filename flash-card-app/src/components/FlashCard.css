@@ -19,8 +19,10 @@ select[control-id="ControlID-3"] {
   perspective: 1000px;
   width: 200px;
   height: 150px;
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
   margin-top: 30px;
+  position: relative; 
+  z-index: 1; 
 }
 
 .card {
@@ -210,4 +212,92 @@ div > select {
 
 .sort-label {
   margin-left: 650px;
+}
+
+.edit-flash-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.edit-flash-card {
+  background: #fff;
+  padding: 20px;
+  max-width: 274px;
+  width: 134%;
+  height: 280px;
+  text-align: center;
+  margin-left: 100px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-flash-card h2 {
+  text-align: center;
+  margin-top: 2px;
+}
+
+.edit-flash-card label {
+  margin-bottom: 5px;
+  display: block;
+}
+
+.edit-flash-card input,
+.edit-flash-card select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: -7px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.edit-flash-card button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.edit-flash-card button:hover {
+  background-color: #45a049;
+}
+
+.edit-flash-card button:last-child {
+  background-color: #cc0000;
+}
+
+.edit-flash-card button:last-child:hover {
+  background-color: #990000;
+}
+
+.edit-fcard {
+  margin-left: 10px;
+}
+
+.input-container {
+  margin-bottom: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px; 
+}
+
+.button-container button {
+  margin: 0 20px;
 }
