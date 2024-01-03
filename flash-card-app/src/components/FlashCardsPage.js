@@ -33,8 +33,17 @@ const FlashCardsPage = () => {
     try {
       const response = await axios.get(`http://localhost:3000/flashcards?page=${page}`);
       const newData = response.data || [];
-      setOriginalFlashCardsData([...originalFlashCardsData, ...newData]);
-      sortByDate([...originalFlashCardsData, ...newData]); // Initial sorting
+  
+      // Combine existing filters with new data
+      const filteredData = newData
+        .filter((card) => (selectedStatus === '' ? true : card.status === selectedStatus))
+        .filter((card) => (searchQuery === '' ? true : card.question.toLowerCase().includes(searchQuery) || card.answer.toLowerCase().includes(searchQuery)));
+  
+      // Update originalFlashCardsData with the filtered and sorted data
+      setOriginalFlashCardsData([...filteredData]);
+  
+      // Sort the updated flash cards
+      sortByDate(filteredData);
     } catch (error) {
       console.error('Error fetching flashcards data:', error);
     }
@@ -84,7 +93,8 @@ const FlashCardsPage = () => {
 
   const filterByStatus = (status) => {
     const filteredCards = originalFlashCardsData.filter((card) => (status === '' ? true : card.status === status));
-    sortByDate(filteredCards); // Sorting after filtering
+    const sortedFilteredCards = sortByAttribute(filteredCards, sortOption);
+    setFlashCardsData(sortedFilteredCards);
   };
 
   useEffect(() => {
