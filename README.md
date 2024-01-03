@@ -108,37 +108,36 @@ flash-card-app
 ## Flash Card Management
 
 ### Creating Cards
-1. **Click the "Create" button.**
-2. Fill in the details, including front text, back answer, and status.
+1. Fill in the details, including front text, back answer, and status.
+2. Click on "Add Card" button.
 
 ### Updating Cards
-1. **Hover over a card and click "Edit."**
+1. Hover over a card and click "Edit."
 2. Modify the front text, back answer, or status.
 3. Save the changes to update the card.
 
 ### Deleting Cards
-1. **Click the "Delete" button on a card to remove it.**
+1. Click the "Delete" button on a card to remove it.
 
 ## Display and Interaction
 
 ### Interactive Cards
-- **Click on a card to flip and view the back side.**
+- Click on a card to flip and view the back side.
 - Interact with the card's buttons for actions like editing and deleting.
 
 ### Searching Cards
-- **Use the search bar to find cards based on text content.**
+- Use the search bar to find cards based on text content.
 
 ### Filtering and Sorting
-- **Filter cards by status using the dropdown menu.**
+- Filter cards by status using the dropdown menu.
 - Sort cards based on date added, statuses, and, alphabetical order of the questions.
 
 ## Bonus Features
 
 ### Share Function
-1. **Select multiple cards by checking the checkboxes.**
-2. **Click the "Share" button to share the selected cards via email in JSON format.**
+1. Select multiple cards by checking the checkboxes.
+2. Click the "Share" button to share the selected cards via email in JSON format.
 
 # Conclusion
 
-**The Flash Card App provides a comprehensive solution for educational purposes.** With a user-friendly interface, intuitive card management, and additional features like searching, filtering, and sharing, it offers an engaging learning experience. The modular component structure ensures code reusability and maintainability, making it a valuable tool for both learners and educators.
-
+The Flash Card App provides a comprehensive solution for educational purposes.With a user-friendly interface, intuitive card management, and additional features like searching, filtering, and sharing, it offers an engaging learning experience. The modular component structure ensures code reusability and maintainability, making it a valuable tool for both learners and educators.
