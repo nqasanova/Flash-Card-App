@@ -95,6 +95,7 @@ flash-card-app
 |-- db.json
 |-- README.md
 |-- ...
+```
 
 - **public:** Contains the HTML file and other assets.
 - **src:** The main source code directory.
