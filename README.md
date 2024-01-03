@@ -27,9 +27,9 @@ Welcome to the Flash Card App, a versatile educational tool crafted with React. 
 
 ## Flash Card Management
 - **Create Cards:**
-  Users can effortlessly generate new flash cards containing text.
-- **Update Cards:**
-  Modify existing cards by editing the front question, back answer, and status.
+  Users can effortlessly generate new flash cards containing a question, an answer, and a status.
+- **Edit Cards:**
+  Edit existing cards by editing the front question, back answer, and status.
 - **Delete Cards:**
   Remove unwanted cards through a straightforward deletion process.
 
