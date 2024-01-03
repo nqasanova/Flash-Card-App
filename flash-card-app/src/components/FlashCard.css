@@ -1,3 +1,14 @@
+.name {
+  text-align: center;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  padding: 10px;
+}
+
 select[control-id="ControlID-3"] {
   border: 1px solid #ccc;
   padding: 8px;
@@ -300,4 +311,41 @@ div > select {
 
 .button-container button {
   margin: 0 20px;
+}
+
+.card-checkbox {
+  margin-right: 5px;
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.button-container button {
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+  background-color: #3367d6;
+}
+
+.button-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.share-btn {
+  margin-left: 650px;
+  margin-bottom: -11px;
 }

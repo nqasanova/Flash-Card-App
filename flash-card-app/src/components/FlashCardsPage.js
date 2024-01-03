@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { EmailShareButton, EmailIcon } from 'react-share';
 import FlashCard from './FlashCard';
 
 const FlashCardsPage = () => {
@@ -8,6 +9,7 @@ const FlashCardsPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [sortOption, setSortOption] = useState('date');
+  const [selectedCards, setSelectedCards] = useState([]);
 
   const [originalFlashCardsData, setOriginalFlashCardsData] = useState([]);
 
@@ -50,7 +52,6 @@ const FlashCardsPage = () => {
     setFlashCardsData(sortByAttribute(cards, sortOption));
   };
 
-
   const editCard = async (id, updatedCard) => {
     try {
       // Update the flash card on the server
@@ -90,6 +91,36 @@ const FlashCardsPage = () => {
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);
     filterByStatus(e.target.value);
+  };
+
+  const handleCheckboxChange = (id) => {
+    const updatedSelectedCards = [...selectedCards];
+    const index = updatedSelectedCards.indexOf(id);
+
+    if (index !== -1) {
+      updatedSelectedCards.splice(index, 1);
+    } else {
+      updatedSelectedCards.push(id);
+    }
+
+    setSelectedCards(updatedSelectedCards);
+  };
+
+  const shareSelectedCards = () => {
+    const selectedCardDetails = selectedCards.map((id) => {
+      const selectedCard = flashCardsData.find((card) => card.id === id);
+      return {
+        question: selectedCard.question,
+        answer: selectedCard.answer,
+        status: selectedCard.status,
+      };
+    });
+
+    const emailBody = JSON.stringify(selectedCardDetails, null, 2);
+    const emailSubject = 'Flash Cards Selection';
+
+    // Open the default mail client with the selected cards details
+    window.location.href = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
   };
 
   const searchCards = () => {
@@ -176,11 +207,23 @@ const FlashCardsPage = () => {
           </button>
         </div>
       </div>
+      <div>
+        <button onClick={shareSelectedCards} disabled={selectedCards.length === 0}>
+          Share Selected Cards
+        </button>
+      </div>
 
       {/* Fetched Cards Section */}
       <div className="flash-cards-container">
         {flashCardsData.map((card) => (
-          <FlashCard key={card.id} card={card} onEdit={editCard} onDelete={deleteCard} />
+          <FlashCard
+            key={card.id}
+            card={card}
+            onEdit={editCard}
+            onDelete={deleteCard}
+            onSelect={() => handleCheckboxChange(card.id)}
+            isSelected={selectedCards.includes(card.id)}
+          />
         ))}
       </div>
     </div>

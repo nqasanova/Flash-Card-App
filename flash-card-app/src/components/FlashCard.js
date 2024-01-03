@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './FlashCard.css';
 import EditFlashCard from './EditFlashCard';
 
-const FlashCard = ({ card, onEdit, onDelete }) => {
+const FlashCard = ({ card, onEdit, onDelete, onSelect, isSelected }) => {
   const { id, question, answer, lastModified, status } = card;
   const [isFlipped, setIsFlipped] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -32,12 +32,23 @@ const FlashCard = ({ card, onEdit, onDelete }) => {
     setEditingCardId(null);
   };
 
+  const handleCheckboxChange = () => {
+    onSelect(id, !isSelected);
+  };
+
   return (
     <div className={`flash-card ${isFlipped ? 'flipped' : ''}`}>
       {isEditing && editingCardId === id ? (
         <EditFlashCard card={card} onClose={handleEditClose} onSave={handleEditSave} />
       ) : (
         <>
+          <input
+            type="checkbox"
+            checked={isSelected}
+            onChange={handleCheckboxChange}
+            className="card-checkbox"
+          />
+
           <div className="card" onClick={handleFlip}>
             <div className="card-side front">
               <p>{question}</p>
