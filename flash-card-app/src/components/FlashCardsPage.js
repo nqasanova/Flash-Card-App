@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { EmailShareButton, EmailIcon } from 'react-share';
 import FlashCard from './FlashCard';
@@ -10,8 +10,10 @@ const FlashCardsPage = () => {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [sortOption, setSortOption] = useState('date');
   const [selectedCards, setSelectedCards] = useState([]);
-
   const [originalFlashCardsData, setOriginalFlashCardsData] = useState([]);
+  const [page, setPage] = useState(1); 
+
+  const containerRef = useRef(null);
 
   const addCard = async () => {
     try {
@@ -29,9 +31,10 @@ const FlashCardsPage = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/flashcards');
-      setOriginalFlashCardsData(response.data || []);
-      sortByDate(response.data); // Initial sorting
+      const response = await axios.get(`http://localhost:3000/flashcards?page=${page}`);
+      const newData = response.data || [];
+      setOriginalFlashCardsData([...originalFlashCardsData, ...newData]);
+      sortByDate([...originalFlashCardsData, ...newData]); // Initial sorting
     } catch (error) {
       console.error('Error fetching flashcards data:', error);
     }
@@ -58,7 +61,7 @@ const FlashCardsPage = () => {
       await axios.put(`http://localhost:3000/flashcards/${id}`, updatedCard);
 
       // Fetch the updated flash cards from the server
-      const updatedData = await axios.get('http://localhost:3000/flashcards');
+      const updatedData = await axios.get(`http://localhost:3000/flashcards?page=${page}`);
       const updatedCards = updatedData.data || [];
 
       // Set the updated flash cards and sort them
@@ -86,7 +89,24 @@ const FlashCardsPage = () => {
 
   useEffect(() => {
     fetchData();
-  }, [selectedStatus, sortOption]);
+  }, [selectedStatus, sortOption, page]);
+  
+  useEffect(() => {
+    const container = containerRef.current;
+  
+    const handleScroll = () => {
+      // Check if the user has scrolled to the bottom, and only fetch data if the container is scrollable
+      if (container.scrollHeight > container.clientHeight && container.scrollTop + container.clientHeight >= container.scrollHeight) {
+        setPage((prevPage) => prevPage + 1);
+      }
+    };
+  
+    container.addEventListener('scroll', handleScroll);
+  
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+    };
+  }, [containerRef, page]);
 
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);
@@ -137,7 +157,8 @@ const FlashCardsPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ margin: 0, padding: 0 }}>
+    <div ref={containerRef} style={{ overflowY: 'auto', height: '1000px' }}>
       <h1 style={{ textAlign: 'center' }}>Flash Cards</h1>
 
       {/* Add New Flash Card Section */}
@@ -226,6 +247,7 @@ const FlashCardsPage = () => {
           />
         ))}
       </div>
+    </div>
     </div>
   );
 };
