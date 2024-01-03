@@ -72,11 +72,13 @@ To set up and run the Flash Card App on your local machine, follow these steps:
    npm start
 
 10. **Access the App:**
+    ```bash
     Open your browser and go to http://localhost:3001 to experience the Flash Card App.
 
 
 # Project Structure
-**The Flash Card App follows a well-organized project structure for maintainability:**
+The Flash Card App follows a well-organized project structure for maintainability:
+
 flash-card-app
 |-- public
 |-- src
