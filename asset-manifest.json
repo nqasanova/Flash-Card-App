@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/nqasanova/Flash-Card-App/static/css/main.eb33b49d.css",
+    "main.js": "/nqasanova/Flash-Card-App/static/js/main.40f39348.js",
+    "index.html": "/nqasanova/Flash-Card-App/index.html",
+    "main.eb33b49d.css.map": "/nqasanova/Flash-Card-App/static/css/main.eb33b49d.css.map",
+    "main.40f39348.js.map": "/nqasanova/Flash-Card-App/static/js/main.40f39348.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eb33b49d.css",
+    "static/js/main.40f39348.js"
+  ]
+}
