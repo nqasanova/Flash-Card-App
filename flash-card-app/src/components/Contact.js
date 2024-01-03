@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Contact.css';
+import '../assets/css/Contact.css';
 
 const Contact = () => {
   // State to hold the contact form information

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './FlashCard.css';
+import '../assets/css/FlashCard.css';
 
 const EditFlashCard = ({ card, onClose, onSave }) => {
   const [editedContent, setEditedContent] = useState({ ...card });

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './FlashCard.css';
+import '../assets/css/FlashCard.css';
 import EditFlashCard from './EditFlashCard';
 
 const FlashCard = ({ card, onEdit, onDelete, onSelect, isSelected }) => {
