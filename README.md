@@ -79,11 +79,10 @@ To set up and run the Flash Card App on your local machine, follow these steps:
 # Project Structure
 The Flash Card App follows a well-organized project structure for maintainability:
 
+```bash
 flash-card-app
 |-- public
-
 |-- src
-
 |   |-- assets
 |   |-- components
 |   |-- App.css
