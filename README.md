@@ -56,18 +56,23 @@ To set up and run the Flash Card App on your local machine, follow these steps:
    git clone https://github.com/nqasanova/Flash-Card-App
 
 2. **Navigate to the Project Directory**
+   ```bash
    cd flash-card-app
 
-3. **Install Dependencies**
+4. **Install Dependencies**
+   ```bash
    npm install
 
-4. **Start the JSON Server**
+6. **Start the JSON Server**
+   ```bash
    json-server --watch db.json --port 3000
 
-5. **Start the React App**
+8. **Start the React App**
+   ```bash
    npm start
 
-6. **Access the App**
+10. **Access the App**
+   ```bash
    Open your browser and go to http://localhost:3001 to experience the Flash Card App.
 
 # Project Structure
