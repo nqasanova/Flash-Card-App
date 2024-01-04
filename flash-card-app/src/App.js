@@ -18,7 +18,7 @@ const App = () => {
         {/* Set the default route to the Home component */}
         <Route path="/Flash-Card-App" element={<Home />} />
 
-        {/* Route for the Flash Cards page */}
+        {/* Route for Flash Cards page */}
         <Route path="/flash-cards" element={<FlashCardsPage />} />
 
         {/* Route for the Contact page */}
