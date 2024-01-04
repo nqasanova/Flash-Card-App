@@ -37,7 +37,7 @@ const Contact = () => {
   // JSX rendering of the Contact component
   return (
     <div className="contact-container">
-      <h1>Contact Us</h1>
+      <h1 class="contact">Contact Us</h1>
       <div className="contact-form">
         <label>Subject:</label>
         <input type="text" name="subject" className="subject" value={contactInfo.subject} onChange={handleInputChange} />
